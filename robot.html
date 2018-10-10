@@ -13,12 +13,12 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
     <div>
         <input id="server-ip" type="text" placeholder="服务器IP" value="127.0.0.1" autofocus="autofocus"/>
         <input id="server-port" type="text" placeholder="服务器端口" value="9000"/>
-        <input id="connect" type="button" value="连接" onclick="connect()"/>
-        <input id="disconnect" type="button" value="断开" disabled onclick="disconnect()"/>
+        <input id="connect" type="button" value="连接" onclick="connectWS()"/>
+        <input id="disconnect" type="button" value="断开" disabled onclick="disconnectWS()"/>
     </div>
     <div>
         <input id="client-message" type="text" placeholder="发送文本" value="I'm WebSocket Client!"/>
-        <input id="send" type="button" value="发送" onclick="send()"/>
+        <input id="send" type="button" value="发送" onclick="sendMsg()"/>
     </div>
     <div>
         <div>
@@ -31,7 +31,7 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
 <script>
     var ws;
 
-    function connect() {
+    function connectWS() {
         var host = "ws://" + $("server-ip").value + ":" + $("server-port").value + "/";
         ws = new WebSocket(host);
 
@@ -41,7 +41,6 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
             $("disconnect").disabled = false;
             $("msg-board").value += '\r\n' + '系统提示: 连接成功';
         };
-
         ws.onmessage = function (evt) {
             if (typeof evt.data === "string") {
                 displayContent('server', evt.data);
@@ -50,26 +49,24 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
                 $("msg-board").value += '\r\n' + '系统提示: 服务器返回了非文本消息';
             }
         };
-
         ws.onclose = function (evt) {
             $("msg-board").value += '\r\n' + '系统提示: 服务端连接关闭';
             $("connect").disabled = false;
             $("disconnect").disabled = true;
         };
-
         ws.onerror = function (exc) {
             $("msg-board").value += '\r\n' + '系统提示: 服务端出错了';
             console.warn(exc)
         };
     }
 
-    function send() {
+    function sendMsg() {
         var msg = $("client-message").value;
         ws.send(msg);
         displayContent('client', msg);
     }
 
-    function disconnect() {
+    function disconnectWS() {
         ws.close();
         $("msg-board").value += '\r\n' + '系统提示: 断开连接';
         $("connect").disabled = false;
@@ -78,11 +75,11 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
 
     // 页面刷新或关闭
     window.onbeforeunload = function () {
-        disconnect();
+        disconnectWS();
     };
 
     function displayContent(who, msg) {
-        $("msg-board").value += '\r\n' + new Date().Format("hh:mm:ss") + '\r\n'  +who + ':  '+ msg;
+        $("msg-board").value += '\r\n' + new Date().Format("hh:mm:ss") + '\r\n' + who + ':  ' + msg;
     }
 
     function $(id) {
