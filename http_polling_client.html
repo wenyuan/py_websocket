@@ -5,10 +5,10 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>xwenyuan的聊天室</title>
+    <title>wenyuan的聊天室</title>
 </head>
 <body>
-<h3>xwenyuan的聊天室</h3>
+<h3>wenyuan的聊天室</h3>
 <div id="login">
     <div>
         <input id="server-ip" type="text" placeholder="服务器IP" value="127.0.0.1" autofocus="autofocus"/>
@@ -44,8 +44,7 @@ ref: https://blog.csdn.net/wangzhanzheng/article/details/78603532
         ws.onmessage = function (evt) {
             if (typeof evt.data === "string") {
                 displayContent(evt.data);
-            }
-            else {
+            } else {
                 $("msg-board").value += '\r\n' + '系统提示: 服务器返回了非文本消息';
             }
         };
