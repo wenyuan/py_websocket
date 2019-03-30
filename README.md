@@ -4,9 +4,12 @@
 ## 使用方法
 ### 1. 基于HTTP
 运行命令：python http_server.py </br>
-轮询（polling）：打开：http_polling_client.html </br>
-长轮询（long-polling）：打开：http_long_polling_client.html </br>
-iframe流（iframe-streaming）：打开：http_iframe_streaming_client.html </br>
+* 轮询（polling）
+打开：http_polling_client.html </br>
+* 长轮询（long-polling）
+打开：http_long_polling_client.html </br>
+* iframe流（iframe-streaming）
+打开：http_iframe_streaming_client.html </br>
 
 ### 2. 基于WebSocket
 运行命令：python websocket_server.py </br>
