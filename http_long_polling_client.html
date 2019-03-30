@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>轮询</title>
+    <title>长轮询</title>
 </head>
 <body>
 <div style="text-align: center">
-    <h3>轮询（polling）</h3>
-    <p>在下方，将通过轮询的方式向后台请求获取当前时间。</p>
+    <h3>长轮询（long-polling）</h3>
+    <p>在下方，将通过长轮询的方式向后台请求获取当前时间。</p>
     <p id="current-time">当前时间</p>
 </div>
 </body>
@@ -15,8 +15,9 @@
 <script>
     $(function () {
         let $currentTimeDiv = $('#current-time');
-        setInterval(function () {
-            let url = 'http://localhost:9000/get_current_time/'
+        let url = 'http://localhost:9000/get_current_time/'
+
+        function doRequest() {
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -24,15 +25,28 @@
                 jsonp: 'callback',
                 jsonpCallback: 'success_jsonp',
                 contentType: 'application/json',
+                timeout: 5000,
                 success: function (result) {
                     if (result.code !== 200) {
                         console.log('Server Error')
                     } else {
+                        // 返回成功，显示结果
                         $currentTimeDiv.html(result.data.current_time);
+                    }
+                    doRequest()
+                },
+                complete: function (XMLHttpRequest, status) {
+                    if (status == 'timeout') {
+                        // 超时
+                        console.log('Timeout, do request again')
+                        doRequest()
                     }
                 }
             });
-        }, 1000);
+        }
+
+        doRequest()
+
     });
 </script>
 </html>
