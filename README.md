@@ -17,4 +17,5 @@
 多打开几个页面，连接、发送消息 </br>
 
 ## 备注
-代码和实现的功能很简单，仅是一个小demo
+代码和实现的功能很简单，仅是一个小demo </br>
+更多关于Web页面实时推送技术的知识，参见：http://www.wenyuanblog.com/blogs/realtime-messaging-and-websocket.html
