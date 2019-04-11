@@ -59,5 +59,5 @@ class MyHttpHandler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     server = HTTPServer(('localhost', 9000), MyHttpHandler)
-    print("Starting server, use <Ctrl-C> to stop")
+    print('http server is running at http://localhost:9000. Press Ctrl+C to stop.')
     server.serve_forever()

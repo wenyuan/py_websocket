@@ -106,7 +106,7 @@ class WebSocketServer(object):
         except Exception as e:
             print('server error!')
             print(e)
-        print('websocket server running...')
+        print('websocket server is running at http://localhost:9000. Press Ctrl+C to stop.')
         # 等待访问
         while True:
             connection, address = sock.accept()  # 此时会进入waiting状态
